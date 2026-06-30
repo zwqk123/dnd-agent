@@ -361,7 +361,7 @@ async function loadSetting() {
     html += '<div class="card"><div class="card-title">大陆</div>';
     for (const [k,v] of Object.entries(s.continents)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '：</strong>' + v + '</div>';
     html += '</div><div class="card"><div class="card-title">费伦区域</div>';
-    for (const [k,v] of Object.entries(s.faerun_regions)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '：</strong>' + v + '</div>';
+    if (s.faerun_regions) for (const [k,v] of Object.entries(s.faerun_regions)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '：</strong>' + v + '</div>';
     html += '</div><div class="card"><div class="card-title">剑湾城市</div><div class="tags">';
     for (const [k,v] of Object.entries(s.sword_coast_cities)) html += '<span class="tag tag-gold" title="' + v + '">' + k + '</span>';
     html += '</div></div><div class="card"><div class="card-title">神系</div>';

@@ -1,4 +1,4 @@
-const API_BASE = '/api/dnd';
+const API_BASE = '/api';
 
 const TokenManager = {
   get() { return localStorage.getItem('dnd_agent_token'); },
@@ -35,7 +35,7 @@ const DNDAPI = {
     const opts = { method: 'POST', body: formData };
     const token = TokenManager.get();
     if (token) opts.headers = { 'Authorization': `Bearer ${token}` };
-    return fetch(`${API_BASE}/analyze`, opts).then(r => {
+    return fetch(`/api/analyze`, opts).then(r => {
       return r.json().catch(() => { throw new Error(`服务器返回了非JSON响应 (HTTP ${r.status})，请检查PDF大小或重试`); });
     });
   },
