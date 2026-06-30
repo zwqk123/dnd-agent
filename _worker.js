@@ -334,6 +334,12 @@ async function handleAPI(apiPath, request) {
   try {
     switch (apiPath) {
       case 'greet': return json({message:"道尔，你好！我已精通DND 5R(2024)规则体系、怪物构建原理和被遗忘的国度世界观。我可以分析模组、创建怪物、生成带团指南和沉浸式导入建议。",status:"ready"});
+      case 'debug_test': {
+        const d2 = method==='POST' ? await request.json() : {};
+        const t = d2.text || '';
+        const kw = d2.keyword || '';
+        return json({input:t, keyword:kw, includes:t.includes(kw), length:t.length, now:Date.now()});
+      }
 
       case 'analyze': {
         if (method !== 'POST') return err('需要POST请求');
