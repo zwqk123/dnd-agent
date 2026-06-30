@@ -20,15 +20,15 @@ async function apiRequest(endpoint, options = {}) {
   try {
     const response = await fetch(`${API_BASE}${endpoint}`, config);
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || data.message || '请求失败');
+    if (!response.ok) throw new Error(data.error || data.message || '璇锋眰澶辫触');
     return data;
   } catch (error) {
-    console.error('API错误:', endpoint, error);
+    console.error('API閿欒:', endpoint, error);
     throw error;
   }
 }
 
-// DND 专属 API
+// DND 涓撳睘 API
 const DNDAPI = {
   greet() { return apiRequest('/greet'); },
   analyzeModule(formData) {
@@ -53,4 +53,5 @@ const DNDAPI = {
   setting() { return apiRequest('/setting'); },
   monsterKnowledge() { return apiRequest('/monster_knowledge'); },
   monsterTemplates() { return apiRequest('/monster_templates'); },
+  getImmersion() { return apiRequest('/immersion'); },
 };
