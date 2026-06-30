@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DND 5R (2024) 跑团Agent系统</title>
+<style>
+  :root {
+    --bg-primary: #0f0f14;
+    --bg-secondary: #1a1a24;
+    --bg-card: #23233a;
+    --bg-input: #2a2a40;
+    --text-primary: #e8e0d4;
+    --text-secondary: #a09888;
+    --accent-gold: #d4a843;
+    --accent-red: #c0392b;
+    --accent-blue: #4a8db7;
+    --accent-green: #5a9e6f;
+    --accent-purple: #8b5cf6;
+    --border-color: #3a3a50;
+    --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1a24 0%, #2a1a0a 100%);
+    border-bottom: 2px solid var(--accent-gold);
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 {
+    font-size: 20px;
+    color: var(--accent-gold);
+    letter-spacing: 2px;
+  }
+  .header h1 small {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0;
+  }
+  .header-status {
+    font-size: 12px;
+    color: var(--accent-green);
+    display: flex;
+    align-items: center;gap: 6px;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); display: inline-block; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* Main Layout */
+  .main-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    height: calc(100vh - 64px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 16px 0;
+    overflow-y: auto;
+  }
+  .sidebar-title {
+    padding: 8px 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    margin-top: 8px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .sidebar-item:hover { background: rgba(212,168,67,0.05); color: var(--text-primary); }
+  .sidebar-item.active {
+    background: rgba(212,168,67,0.1);
+    border-left-color: var(--accent-gold);
+    color: var(--accent-gold);
+  }
+  .nav-icon { font-size: 18px; width: 24px; text-align: center; }
+
+  /* Content */
+  .content {
+    padding: 24px;
+    overflow-y: auto;
+    background: var(--bg-primary);
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+  .page-title {
+    font-size: 24px;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 14px;
+    color: var(--accent-gold);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .card-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Forms */
+  .form-group { margin-bottom: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .form-row-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 14px;
+    transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+  }
+  textarea { resize: vertical; min-height: 100px; font-family: inherit; }
+  select { cursor: pointer; appearance: auto; }
+  select option { background: var(--bg-card); color: var(--text-primary); }
+
+  .btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-gold), #c99230);
+    color: #1a1a24;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,168,67,0.3); }
+  .btn-danger { background: var(--accent-red); color: white; }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
+  .btn-outline:hover { border-color: var(--accent-gold); }
+  .btn-sm { padding: 6px 14px; font-size: 12px; }
+
+  .flex { display: flex; }
+  .flex-center { display: flex; align-items: center; }
+  .flex-between { display: flex; align-items: center; justify-content: space-between; }
+  .gap-8 { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .mt-12 { margin-top: 12px; }
+  .mb-12 { margin-bottom: 12px; }
+  .w-full { width: 100%; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+  .stat-block {
+    background: var(--bg-card);
+    border: 2px solid var(--accent-gold);
+    border-radius: 8px;
+    padding: 24px;
+    font-family: 'Courier New', monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    font-size: 13px;
+    color: var(--text-primary);
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin: 2px;
+  }
+  .tag-gold { background: rgba(212,168,67,0.2); color: var(--accent-gold); }
+  .tag-blue { background: rgba(74,141,183,0.2); color: var(--accent-blue); }
+  .tag-red { background: rgba(192,57,43,0.2); color: var(--accent-red); }
+  .tag-green { background: rgba(90,158,111,0.2); color: var(--accent-green); }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--bg-input);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s;
+    background: linear-gradient(90deg, var(--accent-red), var(--accent-gold), var(--accent-green));
+  }
+
+  .alert {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .alert-info { background: rgba(74,141,183,0.15); border: 1px solid rgba(74,141,183,0.3); color: var(--accent-blue); }
+  .alert-success { background: rgba(90,158,111,0.15); border: 1px solid rgba(90,158,111,0.3); color: var(--accent-green); }
+  .alert-warning { background: rgba(212,168,67,0.15); border: 1px solid rgba(212,168,67,0.3); color: var(--accent-gold); }
+  .alert-error { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.3); color: var(--accent-red); }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+  }
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .tab:hover { color: var(--text-primary); }
+  .tab.active { border-bottom-color: var(--accent-gold); color: var(--accent-gold); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .loading {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent-gold); font-size: 14px;
+  }
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--accent-gold);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .drop-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--accent-gold);
+    background: rgba(212,168,67,0.05);
+  }
+  .drop-zone-icon { font-size: 48px; margin-bottom: 12px; }
+  .drop-zone-text { color: var(--text-secondary); font-size: 14px; }
+
+  table { width: 100%; font-size: 12px; border-collapse: collapse; }
+  th, td { padding: 4px 6px; border: 1px solid var(--border-color); text-align: left; }
+  th { background: var(--bg-input); }
+
+  .md-content {
+    white-space: pre-wrap; font-size: 13px; line-height: 1.8;
+    font-family: 'Courier New', monospace;
+    background: rgba(0,0,0,0.3);
+    padding: 16px;
+    border-radius: 6px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 768px) {
+    .main-container { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .form-row, .form-row-3, .form-row-4 { grid-template-columns: 1fr; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>DND 5R (2024) <small>跑团Agent系统</small></h1>
+  </div>
+  <div class="header-status">
+    <span class="status-dot"></span>
+    <span>系统就绪 | 道尔已精通上下文</span>
+  </div>
+</div>
+
+<div class="main-container">
+  <div class="sidebar">
+    <div class="sidebar-title">导航</div>
+    <div class="sidebar-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span class="nav-icon">&#9733;</span> 控制台</div>
+    <div class="sidebar-item" data-page="analyze" onclick="switchPage('analyze')"><span class="nav-icon">&#128196;</span> 模组分析</div>
+    <div class="sidebar-item" data-page="monster" onclick="switchPage('monster')"><span class="nav-icon">&#128128;</span> 怪物工坊</div>
+    <div class="sidebar-item" data-page="validate" onclick="switchPage('validate')"><span class="nav-icon">&#9881;</span> 怪物验证</div>
+    <div class="sidebar-item" data-page="encounter" onclick="switchPage('encounter')"><span class="nav-icon">&#9876;</span> 遭遇构建</div>
+    <div class="sidebar-item" data-page="guide" onclick="switchPage('guide')"><span class="nav-icon">&#128214;</span> 带团指南</div>
+    <div class="sidebar-title">知识库</div>
+    <div class="sidebar-item" data-page="rules" onclick="switchPage('rules')"><span class="nav-icon">&#128220;</span> 规则速查</div>
+    <div class="sidebar-item" data-page="setting" onclick="switchPage('setting')"><span class="nav-icon">&#127758;</span> 被遗忘的国度</div>
+    <div class="sidebar-item" data-page="monster_kb" onclick="switchPage('monster_kb')"><span class="nav-icon">&#128300;</span> 怪物构建知识</div>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== 控制台 ===== -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-title">&#9733; 控制台</div>
+      <div class="card">
+        <div class="flex-between mb-12">
+          <div>
+            <div class="card-title">道尔，你好！</div>
+            <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">
+              我已精通DND 5R (2024)规则体系、怪物构建原理和被遗忘的国度世界观。<br>
+              本系统整合<strong>模组分析</strong>、<strong>原创怪物工坊</strong>、<strong>带团指南</strong>三大Agent。
+            </p>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="card" style="border-left:3px solid var(--accent-gold);padding:16px;">
+            <div style="font-size:12px;color:var(--text-secondary);">已加载</div>
+            <div style="font-size:24px;font-weight:bold;color:var(--accent-gold);" id="stat-modules">0</div>
+            <div style="font-size:12px;color:var(--text-secondary);">个DND模组</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--accent-blue);padding:16px;">
+            <div style="font-size:12px;color:var(--text-secondary);">规则覆盖</div>
+            <div style="font-size:24px;font-weight:bold;color:var(--accent-blue);">CR 0-30</div>
+            <div style="font-size:12px;color:var(--text-secondary);">完整挑战等级表</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--accent-purple);padding:16px;">
+            <div style="font-size:12px;color:var(--text-secondary);">怪物创建</div>
+            <div style="font-size:24px;font-weight:bold;color:var(--accent-purple);">6种</div>
+            <div style="font-size:12px;color:var(--text-secondary);">体型 x 14种类型</div>
+          </div>
+        </div>
+        <div class="alert alert-info mt-12" style="font-size:13px;line-height:1.6;">
+          <strong>提示：</strong>在左侧"模组分析"上传DND模组PDF；或在"怪物工坊"创建原创怪物；
+          系统会根据分析结果自动生成带团指南和战术建议。
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 模组分析 ===== -->
+    <div id="page-analyze" class="page">
+      <div class="page-title">&#128196; 模组分析</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">上传模组</div>
+          <div class="drop-zone" id="dropZone" onclick="triggerFileInput()">
+            <div class="drop-zone-icon">&#128196;</div>
+            <div class="drop-zone-text" id="dropText">拖拽PDF到此处，或点击选择文件</div>
+            <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="handleFileInput(this)">
+          </div>
+          <div class="mt-12">
+            <label class="card-label">或直接粘贴模组文本</label>
+            <textarea id="moduleText" rows="6" placeholder="将模组部分文本粘贴到这里..."></textarea>
+          </div>
+          <button class="btn btn-primary mt-12 w-full" onclick="analyzeModule()">&#128269; 开始分析</button>
+        </div>
+        <div class="card">
+          <div class="card-title">分析结果</div>
+          <div id="analysisResult"><div class="alert alert-info">等待分析...</div></div>
+        </div>
+      </div>
+      <div class="card" id="analysisDetail" style="display:none;">
+        <div class="tabs">
+          <div class="tab analysis-tab active" data-tab="overview" onclick="showAnalysisTab('overview')">概览</div>
+          <div class="tab analysis-tab" data-tab="locations" onclick="showAnalysisTab('locations')">地点</div>
+          <div class="tab analysis-tab" data-tab="factions" onclick="showAnalysisTab('factions')">NPC/势力</div>
+          <div class="tab analysis-tab" data-tab="monsters" onclick="showAnalysisTab('monsters')">怪物</div>
+          <div class="tab analysis-tab" data-tab="report" onclick="showAnalysisTab('report')">完整报告</div>
+        </div>
+        <div id="analysisOverview" class="tab-content active"></div>
+        <div id="analysisLocations" class="tab-content"></div>
+        <div id="analysisFactions" class="tab-content"></div>
+        <div id="analysisMonsters" class="tab-content"></div>
+        <div id="analysisReport" class="tab-content"></div>
+      </div>
+    </div>
+
+    <!-- ===== 怪物工坊 ===== -->
+    <div id="page-monster" class="page">
+      <div class="page-title">&#128128; 怪物工坊</div>
+      <div class="card">
+        <div class="card-title">设计新怪物</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="card-label">怪物名称</label>
+            <input id="mName" value="暗影潜伏者" placeholder="输入怪物名称">
+          </div>
+          <div class="form-group">
+            <label class="card-label">挑战等级(CR)</label>
+            <select id="mCr" class="cr-select"></select>
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label class="card-label">体型</label>
+            <select id="mSize">
+              <option>微型</option><option>超小型</option><option selected>中型</option>
+              <option>大型</option><option>巨型</option><option>超巨型</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="card-label">类型</label>
+            <select id="mType">
+              <option>异怪</option><option>野兽</option><option>天界生物</option><option>构装体</option>
+              <option>龙类</option><option>元素</option><option>精类</option><option>邪魔</option>
+              <option>巨人</option><option>类人生物</option><option>怪兽</option><option>泥怪</option>
+              <option>植物</option><option>不死生物</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="card-label">阵营</label>
+            <select id="mAlign">
+              <option>守序善良</option><option>中立善良</option><option>混乱善良</option>
+              <option>守序中立</option><option>绝对中立</option><option>混乱中立</option>
+              <option>守序邪恶</option><option>中立邪恶</option><option>混乱邪恶</option>
+              <option selected>无阵营</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">属性分配（标准值8-20）</div>
+        <div class="form-row-3">
+          <div class="form-group"><label class="card-label">力量</label><input id="mStr" type="number" value="14" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">敏捷</label><input id="mDex" type="number" value="12" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">体质</label><input id="mCon" type="number" value="14" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">智力</label><input id="mInt" type="number" value="8" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">感知</label><input id="mWis" type="number" value="10" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">魅力</label><input id="mCha" type="number" value="8" min="1" max="30"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">生态与特征</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="card-label">栖息环境</label>
+            <input id="mEnv" value="地下洞穴" placeholder="如：森林、地城、山脉">
+          </div>
+          <div class="form-group">
+            <label class="card-label">社会结构</label>
+            <input id="mOrg" value="单独或2-4只群体" placeholder="如：单独、成群">
+          </div>
+        </div>
+        <div class="form-row-4">
+          <div class="form-group">
+            <label class="card-label">伤害抗性(逗号分隔)</label>
+            <input id="mResist" placeholder="如：冷冻,强酸">
+          </div>
+          <div class="form-group">
+            <label class="card-label">伤害免疫</label>
+            <input id="mImmune" placeholder="如：毒素">
+          </div>
+          <div class="form-group">
+            <label class="card-label">伤害易伤</label>
+            <input id="mVuln" placeholder="如：火焰">
+          </div>
+          <div class="form-group">
+            <label class="card-label">特殊标签</label>
+            <input id="mTags" placeholder="如：变形者,不死">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-full mb-12" onclick="createMonster()">&#9889; 生成怪物数据卡</button>
+      <div id="monsterResult" class="stat-block" style="display:none;"></div>
+    </div>
+
+    <!-- ===== 怪物验证 ===== -->
+    <div id="page-validate" class="page">
+      <div class="page-title">&#9881; 怪物设计验证</div>
+      <div class="card">
+        <div class="card-title">输入怪物参数进行CR平衡性验证</div>
+        <div class="form-row-3">
+          <div class="form-group"><label class="card-label">怪物名称</label><input id="vName" value="无名怪物"></div>
+          <div class="form-group"><label class="card-label">目标CR</label><select id="vCr" class="cr-select"></select></div>
+          <div class="form-group"><label class="card-label">类型</label>
+            <select id="vType">
+              <option>异怪</option><option>野兽</option><option>天界生物</option><option>构装体</option>
+              <option>龙类</option><option>元素</option><option>精类</option><option>邪魔</option>
+              <option>巨人</option><option>类人生物</option><option>怪兽</option><option>泥怪</option>
+              <option>植物</option><option>不死生物</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-4">
+          <div class="form-group"><label class="card-label">护甲等级(AC)</label><input id="vAc" type="number" value="13"></div>
+          <div class="form-group"><label class="card-label">生命值(HP)</label><input id="vHp" type="number" value="80"></div>
+          <div class="form-group"><label class="card-label">攻击加值</label><input id="vAtt" type="number" value="4"></div>
+          <div class="form-group"><label class="card-label">每轮伤害(DPR)</label><input id="vDpr" type="number" value="20"></div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group"><label class="card-label">豁免DC(如有)</label><input id="vDc" type="number" value="12"></div>
+          <div class="form-group flex-center gap-8" style="padding-top:24px;">
+            <input type="checkbox" id="vSpecial" style="width:auto;"> <label>有特殊能力</label>
+          </div>
+          <div class="form-group flex-center gap-8" style="padding-top:24px;">
+            <input type="checkbox" id="vLegendary" style="width:auto;"> <label>有传奇动作</label>
+          </div>
+        </div>
+        <button class="btn btn-primary w-full mt-12" onclick="validateMonster()">&#128270; 验证设计</button>
+      </div>
+
+      <div id="validateResult" style="display:none;">
+        <div class="card">
+          <div class="flex-between">
+            <div class="card-title">验证结果</div>
+            <div id="uniquenessScore" style="font-size:24px;font-weight:bold;"></div>
+          </div>
+          <div class="progress-bar mt-12"><div class="progress-fill" id="uniquenessBar" style="width:0%"></div></div>
+          <div id="validateSummary" class="alert mt-12"></div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title" style="color:var(--accent-green);">&#10004; 优点</div>
+            <ul id="strengthsList" style="list-style:none;font-size:13px;line-height:2;"></ul>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--accent-red);">&#9888; 问题与建议</div>
+            <ul id="issuesList" style="list-style:none;font-size:13px;line-height:2;"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 遭遇构建 ===== -->
+    <div id="page-encounter" class="page">
+      <div class="page-title">&#9876; 遭遇构建</div>
+      <div class="card">
+        <div class="card-title">配置队伍参数</div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label class="card-label">队伍平均等级</label>
+            <input id="eLevel" type="number" value="3" min="1" max="20">
+          </div>
+          <div class="form-group">
+            <label class="card-label">队伍人数</label>
+            <input id="eSize" type="number" value="4" min="1" max="8">
+          </div>
+          <div class="form-group">
+            <label class="card-label">难度</label>
+            <select id="eDifficulty">
+              <option value="easy">简单</option>
+              <option value="medium" selected>中等</option>
+              <option value="hard">困难</option>
+              <option value="deadly">致命</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary w-full" onclick="buildEncounter()">&#9876; 构建遭遇</button>
+      </div>
+      <div id="encounterResult" class="card" style="display:none;"></div>
+    </div>
+
+    <!-- ===== 带团指南 ===== -->
+    <div id="page-guide" class="page">
+      <div class="page-title">&#128214; 带团指南</div>
+      <div class="card">
+        <div class="card-title">模组带团指南生成</div>
+        <div>
+          <button class="btn btn-primary" onclick="generateGuide()">&#128214; 生成完整指南</button>
+          <button class="btn btn-outline" onclick="generateQuickRef()" style="margin-left:8px;">&#9889; 快速参考卡</button>
+        </div>
+        <div id="guideError" class="alert alert-warning mt-12" style="display:none;"></div>
+      </div>
+      <div id="guideResult"></div>
+      <div id="quickRefResult"></div>
+    </div>
+
+    <!-- ===== 规则速查 ===== -->
+    <div id="page-rules" class="page">
+      <div class="page-title">&#128220; DND 5R (2024) 规则速查</div>
+      <div id="rulesContent"></div>
+    </div>
+
+    <!-- ===== 被遗忘的国度 ===== -->
+    <div id="page-setting" class="page">
+      <div class="page-title">&#127758; 被遗忘的国度</div>
+      <div id="settingContent"></div>
+    </div>
+
+    <!-- ===== 怪物构建知识 ===== -->
+    <div id="page-monster_kb" class="page">
+      <div class="page-title">&#128300; 怪物构建深度知识</div>
+      <div id="monsterKbContent"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
