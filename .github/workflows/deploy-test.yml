@@ -1,0 +1,55 @@
+name: Deploy & Test
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Cloudflare Pages deployment
+        run: |
+          echo "Waiting for Cloudflare Pages to deploy..."
+          URL="https://dnd-agent.pages.dev"
+          for i in $(seq 1 30); do
+            if curl -sf "$URL" > /dev/null 2>&1; then
+              echo "Deploy is live!"
+              break
+            fi
+            echo "Attempt $i/30 - waiting 10s..."
+            sleep 10
+          done
+
+      - name: Test Greet endpoint
+        run: |
+          curl -sf -X POST "https://dnd-agent.pages.dev/api/greet" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"test"}' | grep -q "reply"
+
+      - name: Test Analyze endpoint (Chinese keywords)
+        run: |
+          curl -sf -X POST "https://dnd-agent.pages.dev/api/analyze" \
+            -H "Content-Type: application/json" \
+            -d '{"name":"剑湾冒险","text":"冒险者来到了剑湾的深水城。费伦大陆上地精潜伏在矿坑中。"}' | grep -q "setting"
+
+      - name: Test Rules endpoint
+        run: |
+          curl -sf -X POST "https://dnd-agent.pages.dev/api/rules" \
+            -H "Content-Type: application/json" \
+            -d '{"query":"战士"}' | grep -q "reply"
+
+      - name: Test Immerse endpoint
+        run: |
+          curl -sf -X POST "https://dnd-agent.pages.dev/api/immerse" \
+            -H "Content-Type: application/json" \
+            -d '{"setting":"费伦","characters":"战士","scene":"酒馆"}' | grep -q "scene"
+
+      - name: Test Monster endpoint
+        run: |
+          curl -sf -X POST "https://dnd-agent.pages.dev/api/monster" \
+            -H "Content-Type: application/json" \
+            -d '{"description":"喷火的巨龙"}' | grep -q "monster"
