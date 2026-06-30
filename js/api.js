@@ -32,11 +32,12 @@ async function apiRequest(endpoint, options = {}) {
 const DNDAPI = {
   greet() { return apiRequest('/greet'); },
   analyzeModule(formData) {
-    return fetch(`${API_BASE}/analyze`, {
-      method: 'POST',
-      headers: { ...(TokenManager.get() && { 'Authorization': `Bearer ${TokenManager.get()}` }) },
-      body: formData
-    }).then(r => r.json());
+    const opts = { method: 'POST', body: formData };
+    const token = TokenManager.get();
+    if (token) opts.headers = { 'Authorization': `Bearer ${token}` };
+    return fetch(`${API_BASE}/analyze`, opts).then(r => {
+      return r.json().catch(() => { throw new Error(`服务器返回了非JSON响应 (HTTP ${r.status})，请检查PDF大小或重试`); });
+    });
   },
   createMonster(data) {
     return apiRequest('/create_monster', { method: 'POST', body: JSON.stringify(data) });

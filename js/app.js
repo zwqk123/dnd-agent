@@ -1,6 +1,6 @@
-const creatureTypes = ["异怪","野兽","天界生物","构装体","龙类","元素","精类","邪魔","巨人","类人生物","怪物","泥怪","植物","不死生物"];
-const alignments = ["守序善良","中立善良","混乱善良","守序中立","绝对中立","混乱中立","守序邪恶","中立邪恶","混乱邪恶","无阵营"];
-const damageTypes = ["强酸","冷冻","火焰","力场","闪电","暗蚀","毒素","心灵","光耀","雷鸣","挥砍","穿刺","钝击"];
+const creatureTypes = ["寮傛€?,"閲庡吔","澶╃晫鐢熺墿","鏋勮浣?,"榫欑被","鍏冪礌","绮剧被","閭瓟","宸ㄤ汉","绫讳汉鐢熺墿","鎬墿","娉ユ€?,"妞嶇墿","涓嶆鐢熺墿"];
+const alignments = ["瀹堝簭鍠勮壇","涓珛鍠勮壇","娣蜂贡鍠勮壇","瀹堝簭涓珛","缁濆涓珛","娣蜂贡涓珛","瀹堝簭閭伓","涓珛閭伓","娣蜂贡閭伓","鏃犻樀钀?];
+const damageTypes = ["寮洪吀","鍐峰喕","鐏劙","鍔涘満","闂數","鏆楄殌","姣掔礌","蹇冪伒","鍏夎€€","闆烽福","鎸ョ爫","绌垮埡","閽濆嚮"];
 
 let currentPage = 'dashboard';
 let analysisData = null;
@@ -14,7 +14,7 @@ function switchPage(pageId) {
   if (el) el.classList.add('active');
 }
 
-// ----- 文件拖放 -----
+// ----- 鏂囦欢鎷栨斁 -----
 const dropZone = document.getElementById('dropZone');
 if (dropZone) {
   dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
@@ -34,11 +34,11 @@ function handleFileInput(input) {
   if (input.files[0]) document.getElementById('dropText').textContent = input.files[0].name;
 }
 
-// ----- 分析模组 -----
+// ----- 鍒嗘瀽妯＄粍 -----
 async function analyzeModule() {
   const resultDiv = document.getElementById('analysisResult');
   const detailDiv = document.getElementById('analysisDetail');
-  resultDiv.innerHTML = '<div class="loading"><span class="spinner"></span>分析中...</div>';
+  resultDiv.innerHTML = '<div class="loading"><span class="spinner"></span>鍒嗘瀽涓?..</div>';
   detailDiv.style.display = 'none';
 
   try {
@@ -53,48 +53,48 @@ async function analyzeModule() {
     } else if (textInput) {
       result = await apiRequest('/analyze', {
         method: 'POST',
-        body: JSON.stringify({ text: textInput, name: '手动输入' })
+        body: JSON.stringify({ text: textInput, name: '鎵嬪姩杈撳叆' })
       });
     } else {
-      resultDiv.innerHTML = '<div class="alert alert-error">请上传PDF或粘贴文本</div>';
+      resultDiv.innerHTML = '<div class="alert alert-error">璇蜂笂浼燩DF鎴栫矘璐存枃鏈?/div>';
       return;
     }
 
     if (result.error) { resultDiv.innerHTML = '<div class="alert alert-error">' + result.error + '</div>'; return; }
 
     analysisData = result;
-    resultDiv.innerHTML = '<div class="alert alert-success">分析完成！共 ' + result.char_count + ' 字符</div>';
+    resultDiv.innerHTML = '<div class="alert alert-success">鍒嗘瀽瀹屾垚锛佸叡 ' + result.char_count + ' 瀛楃</div>';
     detailDiv.style.display = 'block';
 
     showAnalysisTab('overview');
     document.getElementById('analysisOverview').innerHTML = `
       <div class="grid-2">
-        <div><strong>设定：</strong>${result.setting || '未知'}</div>
-        <div><strong>等级：</strong>${result.level_range || '未知'}</div>
-        <div><strong>时长：</strong>${result.estimated_playtime || '未知'}</div>
-        <div><strong>主题：</strong>${(result.themes||[]).map(t=>`<span class="tag tag-gold">${t}</span>`).join('')}</div>
+        <div><strong>璁惧畾锛?/strong>${result.setting || '鏈煡'}</div>
+        <div><strong>绛夌骇锛?/strong>${result.level_range || '鏈煡'}</div>
+        <div><strong>鏃堕暱锛?/strong>${result.estimated_playtime || '鏈煡'}</div>
+        <div><strong>涓婚锛?/strong>${(result.themes||[]).map(t=>`<span class="tag tag-gold">${t}</span>`).join('')}</div>
       </div>
-      <div class="mt-12"><strong>摘要：</strong><br>${result.summary || '无'}</div>
+      <div class="mt-12"><strong>鎽樿锛?/strong><br>${result.summary || '鏃?}</div>
     `;
-    document.getElementById('analysisLocations').innerHTML = (result.locations||[]).map(l => `<span class="tag tag-blue">${l}</span>`).join('') || '无';
-    document.getElementById('analysisFactions').innerHTML = (result.factions||[]).map(f => `<span class="tag tag-gold">${f}</span>`).join('') || '无';
-    document.getElementById('analysisNpcs').innerHTML = (result.npcs||[]).map(n => `<span class="tag tag-blue">${n}</span>`).join('') || '无';
-    document.getElementById('analysisMonsters').innerHTML = (result.monsters||[]).map(m => `<span class="tag tag-red">${m}</span>`).join('') || '无';
+    document.getElementById('analysisLocations').innerHTML = (result.locations||[]).map(l => `<span class="tag tag-blue">${l}</span>`).join('') || '鏃?;
+    document.getElementById('analysisFactions').innerHTML = (result.factions||[]).map(f => `<span class="tag tag-gold">${f}</span>`).join('') || '鏃?;
+    document.getElementById('analysisNpcs').innerHTML = (result.npcs||[]).map(n => `<span class="tag tag-blue">${n}</span>`).join('') || '鏃?;
+    document.getElementById('analysisMonsters').innerHTML = (result.monsters||[]).map(m => `<span class="tag tag-red">${m}</span>`).join('') || '鏃?;
     document.getElementById('analysisReport').innerHTML = '<pre class="md-content">' + escapeHtml(result.report_md) + '</pre>';
 
-    // 沉浸指南
+    // 娌夋蹈鎸囧崡
     if (result.immersion) {
       renderImmersion(result.immersion);
     }
 
-    // 自动填充怪物工坊
+    // 鑷姩濉厖鎬墿宸ュ潑
     if (result.monsters && result.monsters.length > 0) {
       const mainMonster = result.monsters[0];
       const locs = result.locations || [];
-      document.getElementById('mEnv').value = locs.length > 0 ? locs[0] : '地下洞穴';
+      document.getElementById('mEnv').value = locs.length > 0 ? locs[0] : '鍦颁笅娲炵┐';
     }
   } catch (e) {
-    resultDiv.innerHTML = '<div class="alert alert-error">分析失败: ' + e.message + '</div>';
+    resultDiv.innerHTML = '<div class="alert alert-error">鍒嗘瀽澶辫触: ' + e.message + '</div>';
   }
 }
 
@@ -117,56 +117,55 @@ function renderImmersion(imm) {
 
   let html = '';
 
-  // 世界观导入
-  html += '<div class="card" style="border-left:3px solid var(--accent-purple);"><div class="card-title">世界背景导入</div>';
+  // 涓栫晫瑙傚鍏?  html += '<div class="card" style="border-left:3px solid var(--accent-purple);"><div class="card-title">涓栫晫鑳屾櫙瀵煎叆</div>';
   html += '<div style="font-size:14px;line-height:1.8;font-style:italic;color:var(--text-primary);">"' + imm.world_intro + '"</div></div>';
 
-  // 故事基调
-  html += '<div class="card"><div class="card-title">故事基调</div>';
+  // 鏁呬簨鍩鸿皟
+  html += '<div class="card"><div class="card-title">鏁呬簨鍩鸿皟</div>';
   html += '<div style="font-size:14px;line-height:1.8;">' + imm.atmosphere + '</div></div>';
 
-  // 地点氛围
+  // 鍦扮偣姘涘洿
   if (imm.location_details && imm.location_details.length > 0) {
-    html += '<div class="card"><div class="card-title">地点氛围描述</div>';
+    html += '<div class="card"><div class="card-title">鍦扮偣姘涘洿鎻忚堪</div>';
     for (const loc of imm.location_details) {
       html += '<div class="card" style="margin-bottom:8px;padding:14px;">';
       html += '<div style="font-weight:bold;color:var(--accent-gold);margin-bottom:6px;">' + loc.name + '</div>';
       html += '<div style="font-size:13px;line-height:1.7;">';
-      html += '<div><strong>氛围：</strong>' + (loc.atmosphere || '未知') + '</div>';
-      html += '<div><strong>听见：</strong><span style="color:var(--accent-blue);">' + (loc.sounds || '未知') + '</span></div>';
-      html += '<div><strong>闻到：</strong><span style="color:var(--accent-green);">' + (loc.smells || '未知') + '</span></div>';
-      html += '<div><strong>描述：</strong>' + (loc.description || '未知') + '</div>';
+      html += '<div><strong>姘涘洿锛?/strong>' + (loc.atmosphere || '鏈煡') + '</div>';
+      html += '<div><strong>鍚锛?/strong><span style="color:var(--accent-blue);">' + (loc.sounds || '鏈煡') + '</span></div>';
+      html += '<div><strong>闂诲埌锛?/strong><span style="color:var(--accent-green);">' + (loc.smells || '鏈煡') + '</span></div>';
+      html += '<div><strong>鎻忚堪锛?/strong>' + (loc.description || '鏈煡') + '</div>';
       html += '</div></div>';
     }
     html += '</div>';
   }
 
-  // 玩家导入钩子
-  html += '<div class="card"><div class="card-title">玩家导入建议</div><ul style="list-style:none;font-size:13px;line-height:2;">';
+  // 鐜╁瀵煎叆閽╁瓙
+  html += '<div class="card"><div class="card-title">鐜╁瀵煎叆寤鸿</div><ul style="list-style:none;font-size:13px;line-height:2;">';
   for (const hook of (imm.player_hooks || [])) {
     html += '<li style="padding:6px 0;">&#9654; ' + hook + '</li>';
   }
   html += '</ul></div>';
 
   // Session 0
-  html += '<div class="card"><div class="card-title">Session 0 建议</div><ul style="list-style:none;font-size:13px;line-height:2;">';
+  html += '<div class="card"><div class="card-title">Session 0 寤鸿</div><ul style="list-style:none;font-size:13px;line-height:2;">';
   for (const tip of (imm.session_zero_advice || [])) {
     html += '<li style="padding:4px 0;">&#9672; ' + tip + '</li>';
   }
   html += '</ul></div>';
 
-  // 音乐建议
+  // 闊充箰寤鸿
   if (imm.music_suggestions && imm.music_suggestions.length > 0) {
-    html += '<div class="card"><div class="card-title">音乐氛围建议</div><ul style="list-style:none;font-size:13px;line-height:2;">';
+    html += '<div class="card"><div class="card-title">闊充箰姘涘洿寤鸿</div><ul style="list-style:none;font-size:13px;line-height:2;">';
     for (const m of imm.music_suggestions) {
       html += '<li style="padding:4px 0;">&#9835; ' + m + '</li>';
     }
     html += '</ul></div>';
   }
 
-  // NPC角色扮演
+  // NPC瑙掕壊鎵紨
   if (imm.npc_roleplay_tips && imm.npc_roleplay_tips.length > 0) {
-    html += '<div class="card"><div class="card-title">NPC角色扮演指南</div>';
+    html += '<div class="card"><div class="card-title">NPC瑙掕壊鎵紨鎸囧崡</div>';
     for (const n of imm.npc_roleplay_tips) {
       html += '<div class="card" style="margin-bottom:6px;padding:12px;border-left:3px solid var(--accent-blue);">';
       html += '<div style="font-weight:bold;color:var(--accent-blue);margin-bottom:4px;">' + n.name + '</div>';
@@ -176,8 +175,8 @@ function renderImmersion(imm) {
     html += '</div>';
   }
 
-  // DM提示
-  html += '<div class="card"><div class="card-title">DM提示</div><ul style="list-style:none;font-size:13px;line-height:2;">';
+  // DM鎻愮ず
+  html += '<div class="card"><div class="card-title">DM鎻愮ず</div><ul style="list-style:none;font-size:13px;line-height:2;">';
   for (const tip of (imm.dm_tips || [])) {
     html += '<li style="padding:4px 0;">&#9889; ' + tip + '</li>';
   }
@@ -186,15 +185,15 @@ function renderImmersion(imm) {
   el.innerHTML = html;
 }
 
-// ----- 创建怪物 -----
+// ----- 鍒涘缓鎬墿 -----
 async function createMonster() {
   const resultDiv = document.getElementById('monsterResult');
   resultDiv.style.display = 'block';
-  resultDiv.innerHTML = '<div class="loading"><span class="spinner"></span>生成中...</div>';
+  resultDiv.innerHTML = '<div class="loading"><span class="spinner"></span>鐢熸垚涓?..</div>';
 
   try {
     const data = {
-      name: document.getElementById('mName').value || '无名怪物',
+      name: document.getElementById('mName').value || '鏃犲悕鎬墿',
       cr: parseInt(document.getElementById('mCr').value) || 1,
       size: document.getElementById('mSize').value,
       type: document.getElementById('mType').value,
@@ -208,13 +207,13 @@ async function createMonster() {
       resistances: document.getElementById('mResist').value.split(',').filter(Boolean),
       immunities: document.getElementById('mImmune').value.split(',').filter(Boolean),
       vulnerabilities: document.getElementById('mVuln').value.split(',').filter(Boolean),
-      environment: document.getElementById('mEnv').value || '任意',
-      organization: document.getElementById('mOrg').value || '单独或小群',
+      environment: document.getElementById('mEnv').value || '浠绘剰',
+      organization: document.getElementById('mOrg').value || '鍗曠嫭鎴栧皬缇?,
     };
 
     const result = await DNDAPI.createMonster(data);
     if (result.status === 'ok') {
-      resultDiv.innerHTML = '<div class="alert alert-success">怪物已创建！</div>' + result.markdown;
+      resultDiv.innerHTML = '<div class="alert alert-success">鎬墿宸插垱寤猴紒</div>' + result.markdown;
       // Auto-fill validation
       const m = result.monster;
       document.getElementById('vName').value = m.name;
@@ -227,11 +226,11 @@ async function createMonster() {
       document.getElementById('vLegendary').checked = m.legendary_actions && m.legendary_actions.length > 0;
     }
   } catch(e) {
-    resultDiv.innerHTML = '<div class="alert alert-error">创建失败: ' + e.message + '</div>';
+    resultDiv.innerHTML = '<div class="alert alert-error">鍒涘缓澶辫触: ' + e.message + '</div>';
   }
 }
 
-// ----- 验证怪物 -----
+// ----- 楠岃瘉鎬墿 -----
 async function validateMonster() {
   const resultDiv = document.getElementById('validateResult');
   resultDiv.style.display = 'block';
@@ -260,18 +259,18 @@ async function validateMonster() {
 
     document.getElementById('strengthsList').innerHTML = result.strengths.map(i =>
       '<li style="color:var(--accent-green);">&#10004; ' + i + '</li>'
-    ).join('') || '<li>无</li>';
+    ).join('') || '<li>鏃?/li>';
 
     const allItems = [...result.issues, ...result.suggestions];
     document.getElementById('issuesList').innerHTML = allItems.map(i =>
       '<li' + (result.issues.includes(i) ? ' style="color:var(--accent-red);"' : ' style="color:var(--accent-gold);"') + '>' + i + '</li>'
-    ).join('') || '<li>无问题</li>';
+    ).join('') || '<li>鏃犻棶棰?/li>';
   } catch(e) {
-    resultDiv.innerHTML = '<div class="alert alert-error">验证失败: ' + e.message + '</div>';
+    resultDiv.innerHTML = '<div class="alert alert-error">楠岃瘉澶辫触: ' + e.message + '</div>';
   }
 }
 
-// ----- 遭遇构建 -----
+// ----- 閬亣鏋勫缓 -----
 async function buildEncounter() {
   try {
     const data = {
@@ -283,14 +282,14 @@ async function buildEncounter() {
     const enc = result.encounter;
     document.getElementById('encounterResult').style.display = 'block';
     document.getElementById('encounterResult').innerHTML = `
-      <div class="card-title">遭遇建议</div>
+      <div class="card-title">閬亣寤鸿</div>
       <div class="grid-3">
-        <div><strong>队伍：</strong>${enc.party_size}名${enc.party_level}级</div>
-        <div><strong>难度：</strong><span class="tag tag-gold">${enc.difficulty}</span></div>
-        <div><strong>XP预算：</strong>${enc.xp_budget} XP</div>
+        <div><strong>闃熶紞锛?/strong>${enc.party_size}鍚?{enc.party_level}绾?/div>
+        <div><strong>闅惧害锛?/strong><span class="tag tag-gold">${enc.difficulty}</span></div>
+        <div><strong>XP棰勭畻锛?/strong>${enc.xp_budget} XP</div>
       </div>
-      <div class="mt-12"><strong>构成：</strong>${enc.suggested_composition}</div>
-      <div class="mt-12"><strong>战术：</strong><ul>${enc.tips.map(t => '<li style="padding:3px 0;font-size:13px;">&#9654; ' + t + '</li>').join('')}</ul></div>
+      <div class="mt-12"><strong>鏋勬垚锛?/strong>${enc.suggested_composition}</div>
+      <div class="mt-12"><strong>鎴樻湳锛?/strong><ul>${enc.tips.map(t => '<li style="padding:3px 0;font-size:13px;">&#9654; ' + t + '</li>').join('')}</ul></div>
     `;
   } catch(e) {
     document.getElementById('encounterResult').style.display = 'block';
@@ -298,11 +297,11 @@ async function buildEncounter() {
   }
 }
 
-// ----- 带团指南 -----
+// ----- 甯﹀洟鎸囧崡 -----
 async function generateGuide() {
   const el = document.getElementById('guideResult');
   const err = document.getElementById('guideError');
-  el.innerHTML = '<div class="loading"><span class="spinner"></span>生成中...</div>';
+  el.innerHTML = '<div class="loading"><span class="spinner"></span>鐢熸垚涓?..</div>';
   err.style.display = 'none';
 
   try {
@@ -324,11 +323,11 @@ async function generateQuickRef() {
     const result = await DNDAPI.quickRef();
     if (result.error) { document.getElementById('guideError').style.display = 'block';
       document.getElementById('guideError').textContent = result.error; return; }
-    el.innerHTML = '<div class="card"><div class="card-title">&#9889; 快速参考卡</div><pre class="md-content">' + escapeHtml(result.quick_ref) + '</pre></div>';
+    el.innerHTML = '<div class="card"><div class="card-title">&#9889; 蹇€熷弬鑰冨崱</div><pre class="md-content">' + escapeHtml(result.quick_ref) + '</pre></div>';
   } catch(e) { el.innerHTML = '<div class="alert alert-error">' + e.message + '</div>'; }
 }
 
-// ----- 知识库 -----
+// ----- 鐭ヨ瘑搴?-----
 async function loadRules() {
   try {
     const result = await DNDAPI.rules();
@@ -339,9 +338,9 @@ async function loadRules() {
         html += '<div class="card"><div class="card-title">' + section.replace(/_/g,' ') + '</div>';
         for (const [k, v] of Object.entries(items)) {
           if (typeof v === 'object') {
-            html += '<div class="mt-12"><strong>' + k + '：</strong></div>';
-            for (const [k2, v2] of Object.entries(v)) html += '<div style="padding:2px 12px;font-size:13px;"><strong>' + k2 + '：</strong>' + v2 + '</div>';
-          } else html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '：</strong>' + v + '</div>';
+            html += '<div class="mt-12"><strong>' + k + '锛?/strong></div>';
+            for (const [k2, v2] of Object.entries(v)) html += '<div style="padding:2px 12px;font-size:13px;"><strong>' + k2 + '锛?/strong>' + v2 + '</div>';
+          } else html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '锛?/strong>' + v + '</div>';
         }
         html += '</div>';
       } else if (Array.isArray(items)) {
@@ -357,16 +356,16 @@ async function loadSetting() {
   try {
     const result = await DNDAPI.setting();
     const s = result.setting;
-    let html = '<div class="card"><div class="card-title">世界</div><div>' + s.world_name + '</div></div>';
-    html += '<div class="card"><div class="card-title">大陆</div>';
-    for (const [k,v] of Object.entries(s.continents)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '：</strong>' + v + '</div>';
-    html += '</div><div class="card"><div class="card-title">费伦区域</div>';
-    for (const [k,v] of Object.entries(s.faerun_regions)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '：</strong>' + v + '</div>';
-    html += '</div><div class="card"><div class="card-title">剑湾城市</div><div class="tags">';
+    let html = '<div class="card"><div class="card-title">涓栫晫</div><div>' + s.world_name + '</div></div>';
+    html += '<div class="card"><div class="card-title">澶ч檰</div>';
+    for (const [k,v] of Object.entries(s.continents)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '锛?/strong>' + v + '</div>';
+    html += '</div><div class="card"><div class="card-title">璐逛鸡鍖哄煙</div>';
+    for (const [k,v] of Object.entries(s.faerun_regions)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k + '锛?/strong>' + v + '</div>';
+    html += '</div><div class="card"><div class="card-title">鍓戞咕鍩庡競</div><div class="tags">';
     for (const [k,v] of Object.entries(s.sword_coast_cities)) html += '<span class="tag tag-gold" title="' + v + '">' + k + '</span>';
-    html += '</div></div><div class="card"><div class="card-title">神系</div>';
-    html += '<div style="font-size:13px;"><strong>神上神：</strong>' + s.pantheon.overdeity + '</div>';
-    for (const [name, title] of s.pantheon.greater_deities) html += '<div style="font-size:13px;padding:2px 0;"><strong>' + name + '：</strong>' + title + '</div>';
+    html += '</div></div><div class="card"><div class="card-title">绁炵郴</div>';
+    html += '<div style="font-size:13px;"><strong>绁炰笂绁烇細</strong>' + s.pantheon.overdeity + '</div>';
+    for (const [name, title] of s.pantheon.greater_deities) html += '<div style="font-size:13px;padding:2px 0;"><strong>' + name + '锛?/strong>' + title + '</div>';
     html += '</div>';
     document.getElementById('settingContent').innerHTML = html;
   } catch(e) { document.getElementById('settingContent').innerHTML = '<div class="alert alert-error">' + e.message + '</div>'; }
@@ -376,19 +375,19 @@ async function loadMonsterKb() {
   try {
     const result = await DNDAPI.monsterKnowledge();
     let html = '';
-    html += '<div class="card"><div class="card-title">构建步骤</div><ol style="font-size:13px;line-height:2;">';
+    html += '<div class="card"><div class="card-title">鏋勫缓姝ラ</div><ol style="font-size:13px;line-height:2;">';
     result.creation_steps.forEach(s => html += '<li>' + s + '</li>');
-    html += '</ol></div><div class="card"><div class="card-title">2024 vs 2014 变化</div>';
-    for (const [k,v] of Object.entries(result.changes)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k.replace(/_/g,' ') + '：</strong>' + v + '</div>';
-    html += '</div><div class="card"><div class="card-title">生命骰</div><div class="tags">';
+    html += '</ol></div><div class="card"><div class="card-title">2024 vs 2014 鍙樺寲</div>';
+    for (const [k,v] of Object.entries(result.changes)) html += '<div style="padding:3px 0;font-size:13px;"><strong>' + k.replace(/_/g,' ') + '锛?/strong>' + v + '</div>';
+    html += '</div><div class="card"><div class="card-title">鐢熷懡楠?/div><div class="tags">';
     for (const [k,v] of Object.entries(result.hit_dice)) html += '<span class="tag tag-blue">' + k + ' ' + v + '</span>';
-    html += '</div></div><div class="card"><div class="card-title">特性库</div>';
+    html += '</div></div><div class="card"><div class="card-title">鐗规€у簱</div>';
     for (const [cat, traits] of Object.entries(result.traits)) {
       html += '<div class="mt-12"><strong>' + cat + '</strong></div>';
       traits.forEach(t => html += '<div style="padding:2px 12px;font-size:13px;"><span class="tag tag-gold">' + t[0] + '</span> ' + t[1] + '</div>');
     }
-    html += '</div><div class="card"><div class="card-title">CR表</div><div style="overflow-x:auto;"><table><tr style="background:var(--bg-input);">';
-    html += '<th>CR</th><th>XP</th><th>PB</th><th>AC</th><th>HP</th><th>攻击</th><th>DC</th><th>DPR</th></tr>';
+    html += '</div><div class="card"><div class="card-title">CR琛?/div><div style="overflow-x:auto;"><table><tr style="background:var(--bg-input);">';
+    html += '<th>CR</th><th>XP</th><th>PB</th><th>AC</th><th>HP</th><th>鏀诲嚮</th><th>DC</th><th>DPR</th></tr>';
     let count = 0;
     for (const [cr, d] of Object.entries(result.cr_table)) {
       if (count++ >= 25) break;
@@ -403,9 +402,9 @@ function escapeHtml(t) {
   const d = document.createElement('div'); d.textContent = t; return d.innerHTML;
 }
 
-// ----- 初始化 -----
+// ----- 鍒濆鍖?-----
 document.addEventListener('DOMContentLoaded', async () => {
-  // 动态生成表单选项
+  // 鍔ㄦ€佺敓鎴愯〃鍗曢€夐」
   const crSelects = document.querySelectorAll('.cr-select');
   crSelects.forEach(sel => {
     for (let i = 0; i <= 30; i++) {
