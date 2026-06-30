@@ -20,15 +20,15 @@ async function apiRequest(endpoint, options = {}) {
   try {
     const response = await fetch(`${API_BASE}${endpoint}`, config);
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || data.message || '璇锋眰澶辫触');
+    if (!response.ok) throw new Error(data.error || data.message || '请求失败');
     return data;
   } catch (error) {
-    console.error('API閿欒:', endpoint, error);
+    console.error('API错误:', endpoint, error);
     throw error;
   }
 }
 
-// DND 涓撳睘 API
+// DND 专属 API
 const DNDAPI = {
   greet() { return apiRequest('/greet'); },
   analyzeModule(formData) {

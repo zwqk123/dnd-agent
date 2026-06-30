@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DND 5R (2024) 璺戝洟Agent绯荤粺</title>
+<title>DND 5R (2024) 跑团Agent系统</title>
 <style>
   :root {
     --bg-primary: #0f0f14;
@@ -329,95 +329,98 @@
 
 <div class="header">
   <div>
-    <h1>DND 5R (2024) <small>璺戝洟Agent绯荤粺</small></h1>
+    <h1>DND 5R (2024) <small>跑团Agent系统</small></h1>
   </div>
   <div class="header-status">
     <span class="status-dot"></span>
-    <span>绯荤粺灏辩华 | 閬撳皵宸茬簿閫氫笂涓嬫枃</span>
+    <span>系统就绪 | 道尔已精通上下文</span>
   </div>
 </div>
 
 <div class="main-container">
   <div class="sidebar">
-    <div class="sidebar-title">瀵艰埅</div>
-    <div class="sidebar-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span class="nav-icon">&#9733;</span> 鎺у埗鍙?/div>
-    <div class="sidebar-item" data-page="analyze" onclick="switchPage('analyze')"><span class="nav-icon">&#128196;</span> 妯＄粍鍒嗘瀽</div>
-    <div class="sidebar-item" data-page="monster" onclick="switchPage('monster')"><span class="nav-icon">&#128128;</span> 鎬墿宸ュ潑</div>
-    <div class="sidebar-item" data-page="validate" onclick="switchPage('validate')"><span class="nav-icon">&#9881;</span> 鎬墿楠岃瘉</div>
-    <div class="sidebar-item" data-page="encounter" onclick="switchPage('encounter')"><span class="nav-icon">&#9876;</span> 閬亣鏋勫缓</div>
-    <div class="sidebar-item" data-page="guide" onclick="switchPage('guide')"><span class="nav-icon">&#128214;</span> 甯﹀洟鎸囧崡</div>
-    <div class="sidebar-title">鐭ヨ瘑搴?/div>
-    <div class="sidebar-item" data-page="rules" onclick="switchPage('rules')"><span class="nav-icon">&#128220;</span> 瑙勫垯閫熸煡</div>
-    <div class="sidebar-item" data-page="setting" onclick="switchPage('setting')"><span class="nav-icon">&#127758;</span> 琚仐蹇樼殑鍥藉害</div>
-    <div class="sidebar-item" data-page="monster_kb" onclick="switchPage('monster_kb')"><span class="nav-icon">&#128300;</span> 鎬墿鏋勫缓鐭ヨ瘑</div>
+    <div class="sidebar-title">导航</div>
+    <div class="sidebar-item active" data-page="dashboard" onclick="switchPage('dashboard')"><span class="nav-icon">&#9733;</span> 控制台</div>
+    <div class="sidebar-item" data-page="analyze" onclick="switchPage('analyze')"><span class="nav-icon">&#128196;</span> 模组分析</div>
+    <div class="sidebar-item" data-page="monster" onclick="switchPage('monster')"><span class="nav-icon">&#128128;</span> 怪物工坊</div>
+    <div class="sidebar-item" data-page="validate" onclick="switchPage('validate')"><span class="nav-icon">&#9881;</span> 怪物验证</div>
+    <div class="sidebar-item" data-page="encounter" onclick="switchPage('encounter')"><span class="nav-icon">&#9876;</span> 遭遇构建</div>
+    <div class="sidebar-item" data-page="guide" onclick="switchPage('guide')"><span class="nav-icon">&#128214;</span> 带团指南</div>
+    <div class="sidebar-title">知识库</div>
+    <div class="sidebar-item" data-page="rules" onclick="switchPage('rules')"><span class="nav-icon">&#128220;</span> 规则速查</div>
+    <div class="sidebar-item" data-page="setting" onclick="switchPage('setting')"><span class="nav-icon">&#127758;</span> 被遗忘的国度</div>
+    <div class="sidebar-item" data-page="monster_kb" onclick="switchPage('monster_kb')"><span class="nav-icon">&#128300;</span> 怪物构建知识</div>
   </div>
 
   <div class="content">
 
-    <!-- ===== 鎺у埗鍙?===== -->
+    <!-- ===== 控制台 ===== -->
     <div id="page-dashboard" class="page active">
-      <div class="page-title">&#9733; 鎺у埗鍙?/div>
+      <div class="page-title">&#9733; 控制台</div>
       <div class="card">
         <div class="flex-between mb-12">
           <div>
-            <div class="card-title">閬撳皵锛屼綘濂斤紒</div>
+            <div class="card-title">道尔，你好！</div>
             <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">
-              鎴戝凡绮鹃€欴ND 5R (2024)瑙勫垯浣撶郴銆佹€墿鏋勫缓鍘熺悊鍜岃閬楀繕鐨勫浗搴︿笘鐣岃銆?br>
-              鏈郴缁熸暣鍚?strong>妯＄粍鍒嗘瀽</strong>銆?strong>鍘熷垱鎬墿宸ュ潑</strong>銆?strong>甯﹀洟鎸囧崡</strong>涓夊ぇAgent銆?            </p>
+              我已精通DND 5R (2024)规则体系、怪物构建原理和被遗忘的国度世界观。<br>
+              本系统整合<strong>模组分析</strong>、<strong>原创怪物工坊</strong>、<strong>带团指南</strong>三大Agent。
+            </p>
           </div>
         </div>
         <div class="grid-3">
           <div class="card" style="border-left:3px solid var(--accent-gold);padding:16px;">
-            <div style="font-size:12px;color:var(--text-secondary);">宸插姞杞?/div>
+            <div style="font-size:12px;color:var(--text-secondary);">已加载</div>
             <div style="font-size:24px;font-weight:bold;color:var(--accent-gold);" id="stat-modules">0</div>
-            <div style="font-size:12px;color:var(--text-secondary);">涓狣ND妯＄粍</div>
+            <div style="font-size:12px;color:var(--text-secondary);">个DND模组</div>
           </div>
           <div class="card" style="border-left:3px solid var(--accent-blue);padding:16px;">
-            <div style="font-size:12px;color:var(--text-secondary);">瑙勫垯瑕嗙洊</div>
+            <div style="font-size:12px;color:var(--text-secondary);">规则覆盖</div>
             <div style="font-size:24px;font-weight:bold;color:var(--accent-blue);">CR 0-30</div>
-            <div style="font-size:12px;color:var(--text-secondary);">瀹屾暣鎸戞垬绛夌骇琛?/div>
+            <div style="font-size:12px;color:var(--text-secondary);">完整挑战等级表</div>
           </div>
           <div class="card" style="border-left:3px solid var(--accent-purple);padding:16px;">
-            <div style="font-size:12px;color:var(--text-secondary);">鎬墿鍒涘缓</div>
-            <div style="font-size:24px;font-weight:bold;color:var(--accent-purple);">6绉?/div>
-            <div style="font-size:12px;color:var(--text-secondary);">浣撳瀷 x 14绉嶇被鍨?/div>
+            <div style="font-size:12px;color:var(--text-secondary);">怪物创建</div>
+            <div style="font-size:24px;font-weight:bold;color:var(--accent-purple);">6种</div>
+            <div style="font-size:12px;color:var(--text-secondary);">体型 x 14种类型</div>
           </div>
         </div>
         <div class="alert alert-info mt-12" style="font-size:13px;line-height:1.6;">
-          <strong>鎻愮ず锛?/strong>鍦ㄥ乏渚?妯＄粍鍒嗘瀽"涓婁紶DND妯＄粍PDF锛涙垨鍦?鎬墿宸ュ潑"鍒涘缓鍘熷垱鎬墿锛?          绯荤粺浼氭牴鎹垎鏋愮粨鏋滆嚜鍔ㄧ敓鎴愬甫鍥㈡寚鍗楀拰鎴樻湳寤鸿銆?        </div>
+          <strong>提示：</strong>在左侧"模组分析"上传DND模组PDF；或在"怪物工坊"创建原创怪物；
+          系统会根据分析结果自动生成带团指南和战术建议。
+        </div>
       </div>
     </div>
 
-    <!-- ===== 妯＄粍鍒嗘瀽 ===== -->
+    <!-- ===== 模组分析 ===== -->
     <div id="page-analyze" class="page">
-      <div class="page-title">&#128196; 妯＄粍鍒嗘瀽</div>
+      <div class="page-title">&#128196; 模组分析</div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-title">涓婁紶妯＄粍</div>
+          <div class="card-title">上传模组</div>
           <div class="drop-zone" id="dropZone" onclick="triggerFileInput()">
             <div class="drop-zone-icon">&#128196;</div>
-            <div class="drop-zone-text" id="dropText">鎷栨嫿PDF鍒版澶勶紝鎴栫偣鍑婚€夋嫨鏂囦欢</div>
+            <div class="drop-zone-text" id="dropText">拖拽PDF到此处，或点击选择文件</div>
             <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="handleFileInput(this)">
           </div>
           <div class="mt-12">
-            <label class="card-label">鎴栫洿鎺ョ矘璐存ā缁勬枃鏈?/label>
-            <textarea id="moduleText" rows="6" placeholder="灏嗘ā缁勯儴鍒嗘枃鏈矘璐村埌杩欓噷..."></textarea>
+            <label class="card-label">或直接粘贴模组文本</label>
+            <textarea id="moduleText" rows="6" placeholder="将模组部分文本粘贴到这里..."></textarea>
           </div>
-          <button class="btn btn-primary mt-12 w-full" onclick="analyzeModule()">&#128269; 寮€濮嬪垎鏋?/button>
+          <button class="btn btn-primary mt-12 w-full" onclick="analyzeModule()">&#128269; 开始分析</button>
         </div>
         <div class="card">
-          <div class="card-title">鍒嗘瀽缁撴灉</div>
-          <div id="analysisResult"><div class="alert alert-info">绛夊緟鍒嗘瀽...</div></div>
+          <div class="card-title">分析结果</div>
+          <div id="analysisResult"><div class="alert alert-info">等待分析...</div></div>
         </div>
       </div>
       <div class="card" id="analysisDetail" style="display:none;">
         <div class="tabs">
-          <div class="tab analysis-tab active" data-tab="overview" onclick="showAnalysisTab('overview')">姒傝</div>
-          <div class="tab analysis-tab" data-tab="locations" onclick="showAnalysisTab('locations')">鍦扮偣</div>
-          <div class="tab analysis-tab" data-tab="factions" onclick="showAnalysisTab('factions')">NPC/鍔垮姏</div>
-           <div class="tab analysis-tab" data-tab="monsters" onclick="showAnalysisTab('monsters')">鎬墿</div>
-           <div class="tab analysis-tab" data-tab="immersion" onclick="showAnalysisTab('immersion')">娌夋蹈鎸囧崡</div>
-           <div class="tab analysis-tab" data-tab="report" onclick="showAnalysisTab('report')">瀹屾暣鎶ュ憡</div>
+          <div class="tab analysis-tab active" data-tab="overview" onclick="showAnalysisTab('overview')">概览</div>
+          <div class="tab analysis-tab" data-tab="locations" onclick="showAnalysisTab('locations')">地点</div>
+          <div class="tab analysis-tab" data-tab="factions" onclick="showAnalysisTab('factions')">NPC/势力</div>
+           <div class="tab analysis-tab" data-tab="monsters" onclick="showAnalysisTab('monsters')">怪物</div>
+           <div class="tab analysis-tab" data-tab="immersion" onclick="showAnalysisTab('immersion')">沉浸指南</div>
+           <div class="tab analysis-tab" data-tab="report" onclick="showAnalysisTab('report')">完整报告</div>
          </div>
          <div id="analysisOverview" class="tab-content active"></div>
          <div id="analysisLocations" class="tab-content"></div>
@@ -428,137 +431,137 @@
       </div>
     </div>
 
-    <!-- ===== 鎬墿宸ュ潑 ===== -->
+    <!-- ===== 怪物工坊 ===== -->
     <div id="page-monster" class="page">
-      <div class="page-title">&#128128; 鎬墿宸ュ潑</div>
+      <div class="page-title">&#128128; 怪物工坊</div>
       <div class="card">
-        <div class="card-title">璁捐鏂版€墿</div>
+        <div class="card-title">设计新怪物</div>
         <div class="form-row">
           <div class="form-group">
-            <label class="card-label">鎬墿鍚嶇О</label>
-            <input id="mName" value="鏆楀奖娼滀紡鑰? placeholder="杈撳叆鎬墿鍚嶇О">
+            <label class="card-label">怪物名称</label>
+            <input id="mName" value="暗影潜伏者" placeholder="输入怪物名称">
           </div>
           <div class="form-group">
-            <label class="card-label">鎸戞垬绛夌骇(CR)</label>
+            <label class="card-label">挑战等级(CR)</label>
             <select id="mCr" class="cr-select"></select>
           </div>
         </div>
         <div class="form-row-3">
           <div class="form-group">
-            <label class="card-label">浣撳瀷</label>
+            <label class="card-label">体型</label>
             <select id="mSize">
-              <option>寰瀷</option><option>瓒呭皬鍨?/option><option selected>涓瀷</option>
-              <option>澶у瀷</option><option>宸ㄥ瀷</option><option>瓒呭法鍨?/option>
+              <option>微型</option><option>超小型</option><option selected>中型</option>
+              <option>大型</option><option>巨型</option><option>超巨型</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="card-label">绫诲瀷</label>
+            <label class="card-label">类型</label>
             <select id="mType">
-              <option>寮傛€?/option><option>閲庡吔</option><option>澶╃晫鐢熺墿</option><option>鏋勮浣?/option>
-              <option>榫欑被</option><option>鍏冪礌</option><option>绮剧被</option><option>閭瓟</option>
-              <option>宸ㄤ汉</option><option>绫讳汉鐢熺墿</option><option>鎬吔</option><option>娉ユ€?/option>
-              <option>妞嶇墿</option><option>涓嶆鐢熺墿</option>
+              <option>异怪</option><option>野兽</option><option>天界生物</option><option>构装体</option>
+              <option>龙类</option><option>元素</option><option>精类</option><option>邪魔</option>
+              <option>巨人</option><option>类人生物</option><option>怪兽</option><option>泥怪</option>
+              <option>植物</option><option>不死生物</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="card-label">闃佃惀</label>
+            <label class="card-label">阵营</label>
             <select id="mAlign">
-              <option>瀹堝簭鍠勮壇</option><option>涓珛鍠勮壇</option><option>娣蜂贡鍠勮壇</option>
-              <option>瀹堝簭涓珛</option><option>缁濆涓珛</option><option>娣蜂贡涓珛</option>
-              <option>瀹堝簭閭伓</option><option>涓珛閭伓</option><option>娣蜂贡閭伓</option>
-              <option selected>鏃犻樀钀?/option>
+              <option>守序善良</option><option>中立善良</option><option>混乱善良</option>
+              <option>守序中立</option><option>绝对中立</option><option>混乱中立</option>
+              <option>守序邪恶</option><option>中立邪恶</option><option>混乱邪恶</option>
+              <option selected>无阵营</option>
             </select>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">灞炴€у垎閰嶏紙鏍囧噯鍊?-20锛?/div>
+        <div class="card-title">属性分配（标准值8-20）</div>
         <div class="form-row-3">
-          <div class="form-group"><label class="card-label">鍔涢噺</label><input id="mStr" type="number" value="14" min="1" max="30"></div>
-          <div class="form-group"><label class="card-label">鏁忔嵎</label><input id="mDex" type="number" value="12" min="1" max="30"></div>
-          <div class="form-group"><label class="card-label">浣撹川</label><input id="mCon" type="number" value="14" min="1" max="30"></div>
-          <div class="form-group"><label class="card-label">鏅哄姏</label><input id="mInt" type="number" value="8" min="1" max="30"></div>
-          <div class="form-group"><label class="card-label">鎰熺煡</label><input id="mWis" type="number" value="10" min="1" max="30"></div>
-          <div class="form-group"><label class="card-label">榄呭姏</label><input id="mCha" type="number" value="8" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">力量</label><input id="mStr" type="number" value="14" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">敏捷</label><input id="mDex" type="number" value="12" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">体质</label><input id="mCon" type="number" value="14" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">智力</label><input id="mInt" type="number" value="8" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">感知</label><input id="mWis" type="number" value="10" min="1" max="30"></div>
+          <div class="form-group"><label class="card-label">魅力</label><input id="mCha" type="number" value="8" min="1" max="30"></div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">鐢熸€佷笌鐗瑰緛</div>
+        <div class="card-title">生态与特征</div>
         <div class="form-row">
           <div class="form-group">
-            <label class="card-label">鏍栨伅鐜</label>
-            <input id="mEnv" value="鍦颁笅娲炵┐" placeholder="濡傦細妫灄銆佸湴鍩庛€佸北鑴?>
+            <label class="card-label">栖息环境</label>
+            <input id="mEnv" value="地下洞穴" placeholder="如：森林、地城、山脉">
           </div>
           <div class="form-group">
-            <label class="card-label">绀句細缁撴瀯</label>
-            <input id="mOrg" value="鍗曠嫭鎴?-4鍙兢浣? placeholder="濡傦細鍗曠嫭銆佹垚缇?>
+            <label class="card-label">社会结构</label>
+            <input id="mOrg" value="单独或2-4只群体" placeholder="如：单独、成群">
           </div>
         </div>
         <div class="form-row-4">
           <div class="form-group">
-            <label class="card-label">浼ゅ鎶楁€?閫楀彿鍒嗛殧)</label>
-            <input id="mResist" placeholder="濡傦細鍐峰喕,寮洪吀">
+            <label class="card-label">伤害抗性(逗号分隔)</label>
+            <input id="mResist" placeholder="如：冷冻,强酸">
           </div>
           <div class="form-group">
-            <label class="card-label">浼ゅ鍏嶇柅</label>
-            <input id="mImmune" placeholder="濡傦細姣掔礌">
+            <label class="card-label">伤害免疫</label>
+            <input id="mImmune" placeholder="如：毒素">
           </div>
           <div class="form-group">
-            <label class="card-label">浼ゅ鏄撲激</label>
-            <input id="mVuln" placeholder="濡傦細鐏劙">
+            <label class="card-label">伤害易伤</label>
+            <input id="mVuln" placeholder="如：火焰">
           </div>
           <div class="form-group">
-            <label class="card-label">鐗规畩鏍囩</label>
-            <input id="mTags" placeholder="濡傦細鍙樺舰鑰?涓嶆">
+            <label class="card-label">特殊标签</label>
+            <input id="mTags" placeholder="如：变形者,不死">
           </div>
         </div>
       </div>
 
-      <button class="btn btn-primary w-full mb-12" onclick="createMonster()">&#9889; 鐢熸垚鎬墿鏁版嵁鍗?/button>
+      <button class="btn btn-primary w-full mb-12" onclick="createMonster()">&#9889; 生成怪物数据卡</button>
       <div id="monsterResult" class="stat-block" style="display:none;"></div>
     </div>
 
-    <!-- ===== 鎬墿楠岃瘉 ===== -->
+    <!-- ===== 怪物验证 ===== -->
     <div id="page-validate" class="page">
-      <div class="page-title">&#9881; 鎬墿璁捐楠岃瘉</div>
+      <div class="page-title">&#9881; 怪物设计验证</div>
       <div class="card">
-        <div class="card-title">杈撳叆鎬墿鍙傛暟杩涜CR骞宠　鎬ч獙璇?/div>
+        <div class="card-title">输入怪物参数进行CR平衡性验证</div>
         <div class="form-row-3">
-          <div class="form-group"><label class="card-label">鎬墿鍚嶇О</label><input id="vName" value="鏃犲悕鎬墿"></div>
-          <div class="form-group"><label class="card-label">鐩爣CR</label><select id="vCr" class="cr-select"></select></div>
-          <div class="form-group"><label class="card-label">绫诲瀷</label>
+          <div class="form-group"><label class="card-label">怪物名称</label><input id="vName" value="无名怪物"></div>
+          <div class="form-group"><label class="card-label">目标CR</label><select id="vCr" class="cr-select"></select></div>
+          <div class="form-group"><label class="card-label">类型</label>
             <select id="vType">
-              <option>寮傛€?/option><option>閲庡吔</option><option>澶╃晫鐢熺墿</option><option>鏋勮浣?/option>
-              <option>榫欑被</option><option>鍏冪礌</option><option>绮剧被</option><option>閭瓟</option>
-              <option>宸ㄤ汉</option><option>绫讳汉鐢熺墿</option><option>鎬吔</option><option>娉ユ€?/option>
-              <option>妞嶇墿</option><option>涓嶆鐢熺墿</option>
+              <option>异怪</option><option>野兽</option><option>天界生物</option><option>构装体</option>
+              <option>龙类</option><option>元素</option><option>精类</option><option>邪魔</option>
+              <option>巨人</option><option>类人生物</option><option>怪兽</option><option>泥怪</option>
+              <option>植物</option><option>不死生物</option>
             </select>
           </div>
         </div>
         <div class="form-row-4">
-          <div class="form-group"><label class="card-label">鎶ょ敳绛夌骇(AC)</label><input id="vAc" type="number" value="13"></div>
-          <div class="form-group"><label class="card-label">鐢熷懡鍊?HP)</label><input id="vHp" type="number" value="80"></div>
-          <div class="form-group"><label class="card-label">鏀诲嚮鍔犲€?/label><input id="vAtt" type="number" value="4"></div>
-          <div class="form-group"><label class="card-label">姣忚疆浼ゅ(DPR)</label><input id="vDpr" type="number" value="20"></div>
+          <div class="form-group"><label class="card-label">护甲等级(AC)</label><input id="vAc" type="number" value="13"></div>
+          <div class="form-group"><label class="card-label">生命值(HP)</label><input id="vHp" type="number" value="80"></div>
+          <div class="form-group"><label class="card-label">攻击加值</label><input id="vAtt" type="number" value="4"></div>
+          <div class="form-group"><label class="card-label">每轮伤害(DPR)</label><input id="vDpr" type="number" value="20"></div>
         </div>
         <div class="form-row-3">
-          <div class="form-group"><label class="card-label">璞佸厤DC(濡傛湁)</label><input id="vDc" type="number" value="12"></div>
+          <div class="form-group"><label class="card-label">豁免DC(如有)</label><input id="vDc" type="number" value="12"></div>
           <div class="form-group flex-center gap-8" style="padding-top:24px;">
-            <input type="checkbox" id="vSpecial" style="width:auto;"> <label>鏈夌壒娈婅兘鍔?/label>
+            <input type="checkbox" id="vSpecial" style="width:auto;"> <label>有特殊能力</label>
           </div>
           <div class="form-group flex-center gap-8" style="padding-top:24px;">
-            <input type="checkbox" id="vLegendary" style="width:auto;"> <label>鏈変紶濂囧姩浣?/label>
+            <input type="checkbox" id="vLegendary" style="width:auto;"> <label>有传奇动作</label>
           </div>
         </div>
-        <button class="btn btn-primary w-full mt-12" onclick="validateMonster()">&#128270; 楠岃瘉璁捐</button>
+        <button class="btn btn-primary w-full mt-12" onclick="validateMonster()">&#128270; 验证设计</button>
       </div>
 
       <div id="validateResult" style="display:none;">
         <div class="card">
           <div class="flex-between">
-            <div class="card-title">楠岃瘉缁撴灉</div>
+            <div class="card-title">验证结果</div>
             <div id="uniquenessScore" style="font-size:24px;font-weight:bold;"></div>
           </div>
           <div class="progress-bar mt-12"><div class="progress-fill" id="uniquenessBar" style="width:0%"></div></div>
@@ -566,54 +569,54 @@
         </div>
         <div class="grid-2">
           <div class="card">
-            <div class="card-title" style="color:var(--accent-green);">&#10004; 浼樼偣</div>
+            <div class="card-title" style="color:var(--accent-green);">&#10004; 优点</div>
             <ul id="strengthsList" style="list-style:none;font-size:13px;line-height:2;"></ul>
           </div>
           <div class="card">
-            <div class="card-title" style="color:var(--accent-red);">&#9888; 闂涓庡缓璁?/div>
+            <div class="card-title" style="color:var(--accent-red);">&#9888; 问题与建议</div>
             <ul id="issuesList" style="list-style:none;font-size:13px;line-height:2;"></ul>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ===== 閬亣鏋勫缓 ===== -->
+    <!-- ===== 遭遇构建 ===== -->
     <div id="page-encounter" class="page">
-      <div class="page-title">&#9876; 閬亣鏋勫缓</div>
+      <div class="page-title">&#9876; 遭遇构建</div>
       <div class="card">
-        <div class="card-title">閰嶇疆闃熶紞鍙傛暟</div>
+        <div class="card-title">配置队伍参数</div>
         <div class="form-row-3">
           <div class="form-group">
-            <label class="card-label">闃熶紞骞冲潎绛夌骇</label>
+            <label class="card-label">队伍平均等级</label>
             <input id="eLevel" type="number" value="3" min="1" max="20">
           </div>
           <div class="form-group">
-            <label class="card-label">闃熶紞浜烘暟</label>
+            <label class="card-label">队伍人数</label>
             <input id="eSize" type="number" value="4" min="1" max="8">
           </div>
           <div class="form-group">
-            <label class="card-label">闅惧害</label>
+            <label class="card-label">难度</label>
             <select id="eDifficulty">
-              <option value="easy">绠€鍗?/option>
-              <option value="medium" selected>涓瓑</option>
-              <option value="hard">鍥伴毦</option>
-              <option value="deadly">鑷村懡</option>
+              <option value="easy">简单</option>
+              <option value="medium" selected>中等</option>
+              <option value="hard">困难</option>
+              <option value="deadly">致命</option>
             </select>
           </div>
         </div>
-        <button class="btn btn-primary w-full" onclick="buildEncounter()">&#9876; 鏋勫缓閬亣</button>
+        <button class="btn btn-primary w-full" onclick="buildEncounter()">&#9876; 构建遭遇</button>
       </div>
       <div id="encounterResult" class="card" style="display:none;"></div>
     </div>
 
-    <!-- ===== 甯﹀洟鎸囧崡 ===== -->
+    <!-- ===== 带团指南 ===== -->
     <div id="page-guide" class="page">
-      <div class="page-title">&#128214; 甯﹀洟鎸囧崡</div>
+      <div class="page-title">&#128214; 带团指南</div>
       <div class="card">
-        <div class="card-title">妯＄粍甯﹀洟鎸囧崡鐢熸垚</div>
+        <div class="card-title">模组带团指南生成</div>
         <div>
-          <button class="btn btn-primary" onclick="generateGuide()">&#128214; 鐢熸垚瀹屾暣鎸囧崡</button>
-          <button class="btn btn-outline" onclick="generateQuickRef()" style="margin-left:8px;">&#9889; 蹇€熷弬鑰冨崱</button>
+          <button class="btn btn-primary" onclick="generateGuide()">&#128214; 生成完整指南</button>
+          <button class="btn btn-outline" onclick="generateQuickRef()" style="margin-left:8px;">&#9889; 快速参考卡</button>
         </div>
         <div id="guideError" class="alert alert-warning mt-12" style="display:none;"></div>
       </div>
@@ -621,21 +624,21 @@
       <div id="quickRefResult"></div>
     </div>
 
-    <!-- ===== 瑙勫垯閫熸煡 ===== -->
+    <!-- ===== 规则速查 ===== -->
     <div id="page-rules" class="page">
-      <div class="page-title">&#128220; DND 5R (2024) 瑙勫垯閫熸煡</div>
+      <div class="page-title">&#128220; DND 5R (2024) 规则速查</div>
       <div id="rulesContent"></div>
     </div>
 
-    <!-- ===== 琚仐蹇樼殑鍥藉害 ===== -->
+    <!-- ===== 被遗忘的国度 ===== -->
     <div id="page-setting" class="page">
-      <div class="page-title">&#127758; 琚仐蹇樼殑鍥藉害</div>
+      <div class="page-title">&#127758; 被遗忘的国度</div>
       <div id="settingContent"></div>
     </div>
 
-    <!-- ===== 鎬墿鏋勫缓鐭ヨ瘑 ===== -->
+    <!-- ===== 怪物构建知识 ===== -->
     <div id="page-monster_kb" class="page">
-      <div class="page-title">&#128300; 鎬墿鏋勫缓娣卞害鐭ヨ瘑</div>
+      <div class="page-title">&#128300; 怪物构建深度知识</div>
       <div id="monsterKbContent"></div>
     </div>
 
