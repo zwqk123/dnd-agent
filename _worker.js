@@ -3,8 +3,10 @@ export default {
     try {
       const url = new URL(request.url);
       const path = url.pathname;
-      if (path.startsWith('/api/dnd/')) return handleAPI(path.slice(9), request);
-      return env.ASSETS.fetch(request);
+      if (path.startsWith('/api/')) return handleAPI(path.slice(5), request);
+      const resp = await env.ASSETS.fetch(request);
+      if (resp.status === 404 && request.method === 'GET') return env.ASSETS.fetch(new URL('/', request.url));
+      return resp;
     } catch (e) {
       return json({error: `服务器内部错误: ${e.message}`}, 500);
     }

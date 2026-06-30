@@ -1,1 +1,3 @@
-/*  /index.html  200
+# API路由由_worker.js处理，不在这里重写
+# SPA路由由_worker.js兜底（index.html 404 → /）
+
